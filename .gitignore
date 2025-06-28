@@ -1,0 +1,8 @@
+/.venv/
+/.idea/
+/app/public/uploads/
+
+.env.local
+.env.real
+.env.development
+.env.production
