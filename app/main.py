@@ -5,6 +5,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
+from app.service.FileJob2Service import FileJob2Service
 from app.util.Container import Container
 from app.util.SystemException import SystemException
 from app.util.Res import Res
@@ -64,5 +65,11 @@ async def test_set_data(file_job_service: FileJobService = Depends(lambda: conta
 @app.get("/testGetData")
 async def test_get_data(file_job_service: FileJobService = Depends(lambda: container.file_job_service())):
     result = await file_job_service.test_get_data()
+
+    return Res.success(result)
+
+@app.get("/testSetData2")
+async def test_set_data(file_job2_service: FileJob2Service = Depends()):
+    result = await file_job2_service.test_set_data()
 
     return Res.success(result)
