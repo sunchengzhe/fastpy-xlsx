@@ -8,15 +8,7 @@ class FileJob2Service:
         self.file_job2_model = file_job2_model
 
     async def test_set_data(self):
-
-        # 插入一条数据
-        new_id = await self.file_job2_model.insert({
-            "username": "eadmin1",
-            "trace_id": "adsasdas1",
-            "status": "ready",
-        })
-
-        return {'id': new_id}
+        return {'id': self.file_job2_model.connection}
 
     async def get_connection(self):
         return self.file_job2_model.connection
