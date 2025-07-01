@@ -1,26 +1,26 @@
 # app/service/FileJobService.py
-from functools import lru_cache
 
-from fastapi import Depends
-
-from app.model.FileJob2Model import FileJob2Model, get_file_job2_model_singleton
-from app.service.FileData2Service import FileData2Service, get_file_data2_service_singleton
-
-@lru_cache()
-def get_file_job2_service_singleton() -> "FileJob2Service":
-    return FileJob2Service(
-        file_job2_model=get_file_job2_model_singleton(),
-        file_data2_service=get_file_data2_service_singleton()
-   )
+from app.model.FileJob2Model import FileJob2Model
+from app.service.FileData2Service import FileData2Service
 
 class FileJob2Service:
+    _instance = None
+
     def __init__(
         self,
-        file_job2_model: FileJob2Model = Depends(get_file_job2_model_singleton),
-        file_data2_service: FileData2Service = Depends(get_file_data2_service_singleton)
+        file_job2_model: FileJob2Model,
+        file_data2_service: FileData2Service
     ):
         self.file_job2_model = file_job2_model
         self.file_data2_service = file_data2_service
+
+    @classmethod
+    def get_instance(cls) -> "FileData2Service":
+        if cls._instance is None:
+            model = FileJob2Model.get_instance()
+            service = FileData2Service.get_instance()
+            cls._instance = cls(model, service)
+        return cls._instance
 
     async def test_set_data(self):
         result = await self.file_data2_service.test_set_data()

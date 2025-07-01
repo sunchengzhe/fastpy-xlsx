@@ -1,18 +1,20 @@
 # app/service/FileData2Service.py
-from functools import lru_cache
 import json
 
-from fastapi import Depends
-
-from app.model.FileData2Model import FileData2Model, get_file_data2_model_singleton
-
-@lru_cache()
-def get_file_data2_service_singleton() -> "FileData2Service":
-    return FileData2Service(get_file_data2_model_singleton())
+from app.model.FileData2Model import FileData2Model
 
 class FileData2Service:
-    def __init__(self, file_data2_model: FileData2Model = Depends(get_file_data2_model_singleton)):
+    _instance = None
+
+    def __init__(self, file_data2_model: FileData2Model):
         self.file_data2_model = file_data2_model
+
+    @classmethod
+    def get_instance(cls) -> "FileData2Service":
+        if cls._instance is None:
+            model = FileData2Model.get_instance()
+            cls._instance = cls(model)
+        return cls._instance
 
     async def test_set_data(self):
         # 插入一条数据
