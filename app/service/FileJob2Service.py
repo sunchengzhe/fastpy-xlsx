@@ -6,11 +6,7 @@ from app.service.FileData2Service import FileData2Service
 class FileJob2Service:
     _instance = None
 
-    def __init__(
-        self,
-        file_job2_model: FileJob2Model,
-        file_data2_service: FileData2Service
-    ):
+    def __init__(self, file_job2_model: FileJob2Model, file_data2_service: FileData2Service):
         self.file_job2_model = file_job2_model
         self.file_data2_service = file_data2_service
 
