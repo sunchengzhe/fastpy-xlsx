@@ -1,9 +1,14 @@
 # app/service/FileDataService.py
+from fastapi import Depends
+
+from app.util.singleton import singleton
 from app.model.FileDataModel import FileDataModel
+
 import json
 
+@singleton
 class FileDataService:
-    def __init__(self, file_data_model: FileDataModel):
+    def __init__(self, file_data_model: FileDataModel = Depends(FileDataModel.get_instance)):
         self.file_data_model = file_data_model
 
     async def test_set_data(self):

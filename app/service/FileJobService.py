@@ -1,10 +1,13 @@
 # app/service/FileJobService.py
+from fastapi import Depends
+
+from app.util.singleton import singleton
 from app.model.FileJobModel import FileJobModel
 from app.service.FileDataService import FileDataService
 
-
+@singleton
 class FileJobService:
-    def __init__(self, file_job_model: FileJobModel, file_data_service: FileDataService):
+    def __init__(self, file_job_model: FileJobModel = Depends(FileJobModel.get_instance), file_data_service: FileDataService = Depends(FileDataService.get_instance)):
         self.file_job_model = file_job_model
         self.file_data_service = file_data_service
 
@@ -20,7 +23,3 @@ class FileJobService:
         })
 
         return {'id': new_id}
-
-    async def test_get_data(self):
-        # 模拟业务逻辑
-        return {"value": "Here is your data"}

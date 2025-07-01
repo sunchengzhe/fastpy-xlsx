@@ -5,7 +5,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.service.FileJob2Service import FileJob2Service
+from app.service.FileJobService import FileJobService
 from app.util.SystemException import SystemException
 from app.util.Res import Res
 from app.util.DBBuilder import MAIN_DB
@@ -54,10 +54,8 @@ async def root():
     return {"message": "Hello, FastAPI!"}
 
 
-@app.get("/testSetData2")
-async def test_set_data():
-    file_job2_service = FileJob2Service.get_instance()
-
-    result = await file_job2_service.test_set_data()
+@app.get("/testSetData")
+async def test_set_data(file_job_service: FileJobService = Depends(FileJobService.get_instance)):
+    result = await file_job_service.test_set_data()
 
     return Res.success(result)
