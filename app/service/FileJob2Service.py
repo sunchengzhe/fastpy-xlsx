@@ -15,7 +15,7 @@ class FileJob2Service:
         self.file_data2_service = file_data2_service
 
     @classmethod
-    def get_instance(cls) -> "FileData2Service":
+    def get_instance(cls) -> "FileJob2Service":
         if cls._instance is None:
             model = FileJob2Model.get_instance()
             service = FileData2Service.get_instance()
