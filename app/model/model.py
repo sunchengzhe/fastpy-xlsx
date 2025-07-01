@@ -1,9 +1,10 @@
-# app/model/Model.py
+# app/model/model.py
 from fastapi import Depends
 from abc import ABC, abstractmethod
 from databases import Database
 
-from app.util.DBBuilder import MAIN_DB
+from app.core.database import MAIN_DB
+
 
 class Model(ABC):
     def __init__(self, database: Database = Depends(lambda: MAIN_DB)):

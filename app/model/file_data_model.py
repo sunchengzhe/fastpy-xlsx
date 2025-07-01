@@ -1,15 +1,16 @@
-# app/model/FileJobModel.py
+# app/model/file_data_model.py
 from fastapi import Depends
 from databases import Database
 
-from app.util.singleton import singleton
-from app.model.Model import Model
-from app.util.DBBuilder import MAIN_DB
+from app.core.singleton import singleton
+from app.model.model import Model
+from app.core.database import MAIN_DB
+
 
 @singleton
-class FileJobModel(Model):
+class FileDataModel(Model):
     def __init__(self, database: Database = Depends(lambda: MAIN_DB)):
         super().__init__(database)
 
     def table(self) -> str:
-        return "t_file_job"
+        return "t_file_data"
