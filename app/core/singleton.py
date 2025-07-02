@@ -1,4 +1,5 @@
 # app/util/singleton.py
+
 from functools import lru_cache
 from typing import Type, TypeVar, cast, Protocol
 

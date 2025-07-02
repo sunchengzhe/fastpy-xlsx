@@ -1,12 +1,10 @@
 # app/main.py
+
 from fastapi import FastAPI
-from fastapi import Depends
 
 from app.core.lifespan import lifespan
-from app.core.exception import global_exception
-
-from app.util.res_util import ResUtil
-from app.service.file_job_service import FileJobService
+from app.core.global_exception import global_exception
+from app.core.router_loader import router_loader
 
 # 创建 FastAPI 应用，传入 lifespan 生命周期
 app = FastAPI(lifespan=lifespan)
@@ -14,14 +12,5 @@ app = FastAPI(lifespan=lifespan)
 # 注册全局异常处理器
 app.add_exception_handler(Exception, global_exception)
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello, FastAPI!"}
-
-
-@app.get("/testSetData")
-async def test_set_data(file_job_service: FileJobService = Depends(FileJobService.instance)):
-    result = await file_job_service.test_set_data()
-
-    return ResUtil.success(result)
+# 自动注册所有 controller 里的 router
+router_loader(app)

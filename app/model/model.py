@@ -1,4 +1,5 @@
 # app/model/model.py
+
 from fastapi import Depends
 from abc import ABC, abstractmethod
 from databases import Database
